@@ -5,7 +5,7 @@ class BrowserPollPage extends Page {
 }
 
 class BrowserPollPage_Controller extends Page_Controller {
-    static $allowed_actions  = array('BrowserPollForm');
+    static $allowed_actions  = array('BrowserPollForm', 'BrowserPollResults');
 
     public function BrowserPollForm() {
         if (Session::get('BrowserPollVoted')) return false;
@@ -44,10 +44,11 @@ class BrowserPollPage_Controller extends Page_Controller {
     }
 
     public function BrowserPollResults() {
-        $submissions = new GroupedList(BrowserPollSubmissions::get());
+        $submissions = new GroupedList(BrowserPollSubmission::get());
         $total = $submissions->Count();
 
         $list = new ArrayList();
+
         foreach ($submissions->groupBy('Browser') as $browserName =>
 $browserSubmissions ) {
             $count = $browserSubmissions->Count();
@@ -55,9 +56,11 @@ $browserSubmissions ) {
             $list->push( new ArrayData(array(
                 'Browser'       => $browserName,
                 'Count'         => $count,
-                'Percentage'    => $percentage,
+                'Percentage'    => $percentage
             )));
         }
+
+        return $list;
     }
 }
 
