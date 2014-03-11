@@ -23,7 +23,7 @@ class BrowserPollPage_Controller extends Page_Controller {
                     'Lynx' => 'Lynx'
                 )
             ),
-            new TextareaField(Reason)
+            new TextareaField('Reason')
         );
 
         $actions = new FieldList(
@@ -36,8 +36,19 @@ class BrowserPollPage_Controller extends Page_Controller {
     }
 
     public function doBrowserPoll($data, $form) {
+
         $submission = new BrowserPollSubmission;
         $form->saveInto($submission);
+
+        $row = BrowserPollSubmission::get()->filter(array(
+            'Email' => $form->FieldMap()->Email()->value
+        ))->First();
+        
+        if ( isset($row) ) {
+            $submission->ID = $row->ID;
+        }
+
+        // If ID is set, it will update instead of insert
         $submission->write();
         Session::set('BrowserPollVoted', true);
         return $this->redirectBack();
