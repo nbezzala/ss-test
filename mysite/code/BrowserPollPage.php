@@ -52,7 +52,7 @@ class BrowserPollPage_Controller extends Page_Controller {
         foreach ($submissions->groupBy('Browser') as $browserName =>
 $browserSubmissions ) {
             $count = $browserSubmissions->Count();
-            $percentage = $count / $total * 100;
+            $percentage = (int) ($count / $total * 100);
             $list->push( new ArrayData(array(
                 'Browser'       => $browserName,
                 'Count'         => $count,
