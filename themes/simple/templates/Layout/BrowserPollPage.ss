@@ -19,6 +19,29 @@
             <% end_if %>
         </div>
 		<div class="content">$Content</div>
+
+        Table for browser Poll REsults
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Browser</th>
+                <th>Reason</th>
+                <th>Time updated</th>
+            </thead>
+            <tbody>
+                <% loop $BrowserPollResultsTable %>
+                <tr>
+                    <th>$Name</th>
+                    <th>$Email</th>
+                    <th>$Browser</th>
+                    <th>$Reason</th>
+                    <th>$LastEdited</th>
+                </tr>
+                <% end_loop %>
+            </tbody>
+        </table>
+
 	</article>
 		$Form
 		$PageComments
