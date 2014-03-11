@@ -4,7 +4,20 @@
 		  <img src="http://www.silverstripe.org/themes/silverstripe/images/sslogo.png"
 		alt="Homepage image" />
 		</div>
-        <div class="BrowserPoll">$BrowserPollForm</div>
+        <div id="BrowserPoll">
+            <% if $BrowserPollForm %>
+                $BrowserPollForm
+            <% else %>
+                <ul>
+                    <% loop $BrowserPollResults %>
+                    <li>
+                        <div class="browser">$Browser : $Count : $Percentage%</div>
+                        <div class="bar" style="width:$Percentage%">&nbsp;</div>
+                    </li>
+                    <% end_loop %>
+                </ul>
+            <% end_if %>
+        </div>
 		<div class="content">$Content</div>
 	</article>
 		$Form
