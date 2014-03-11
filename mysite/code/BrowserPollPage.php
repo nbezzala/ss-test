@@ -42,5 +42,22 @@ class BrowserPollPage_Controller extends Page_Controller {
         Session::set('BrowserPollVoted', true);
         return $this->redirectBack();
     }
+
+    public function BrowserPollResults() {
+        $submissions = new GroupedList(BrowserPollSubmissions::get());
+        $total = $submissions->Count();
+
+        $list = new ArrayList();
+        foreach ($submissions->groupBy('Browser') as $browserName =>
+$browserSubmissions ) {
+            $count = $browserSubmissions->Count();
+            $percentage = $count / $total * 100;
+            $list->push( new ArrayData(array(
+                'Browser'       => $browserName,
+                'Count'         => $count,
+                'Percentage'    => $percentage,
+            )));
+        }
+    }
 }
 
