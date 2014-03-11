@@ -62,5 +62,13 @@ $browserSubmissions ) {
 
         return $list;
     }
+
+    public function BrowserPollResultsTable() {
+        $submissions = BrowserPollSubmission::get();
+        $sorted = $submissions->sort(array('Browser' => 'ASC', 'LastEdited' =>
+'ASC'));
+        return $sorted;
+    }
+
 }
 
