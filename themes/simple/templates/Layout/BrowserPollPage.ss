@@ -20,7 +20,6 @@
         </div>
 		<div class="content">$Content</div>
 
-        Table for browser Poll REsults
         <table>
             <thead>
                 <th>Name</th>
