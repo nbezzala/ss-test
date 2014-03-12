@@ -51,6 +51,7 @@ class BrowserPollPage_Controller extends Page_Controller {
         // If ID is set, it will update instead of insert
         $submission->write();
         Session::set('BrowserPollVoted', true);
+        $this->sendEmail($submission);
         return $this->redirectBack();
     }
 
@@ -79,6 +80,22 @@ $browserSubmissions ) {
         $sorted = $submissions->sort(array('Browser' => 'ASC', 'LastEdited' =>
 'ASC'));
         return $sorted;
+    }
+
+    public function sendEmail($submission) {
+        $from = "nbezzala@gmail.com";
+        $to = $submission->Email;
+        $subject = "Browser Poll Submitted Successfully";
+
+        $email = new Email($from, $to, $subject);
+        $email->setTemplate('BrowserPollEmail');
+        $email->populateTemplate(array(
+            'Name'  => $submission->Name,
+            'Email' => $submission->Email,
+            'Browser'   => $submission->Browser,
+            'Reason'    => $submission->Reason
+        ));
+        $email->send();
     }
 
 }
